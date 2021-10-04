@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wire_Controller : MonoBehaviour
+public class wireNode : MonoBehaviour
 {
-
     public static Vector3 cursorPos;
     public bool wireGrabbed = false;
     //public bool hold = false; 
 
-    public bool inSocket = false; 
+    public bool inSocket = false;
 
-    
-    
+    public Vector2 homeLocation = new Vector2(0f, 0f);
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -25,16 +24,14 @@ public class Wire_Controller : MonoBehaviour
 
         if (inSocket == false)
         {
-            
+            if (wireGrabbed == false)
+            {
+                transform.position = homeLocation;
+            }
         }
 
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            wireGrabbed = !wireGrabbed;
-        }
-
-        if(wireGrabbed == true)
+        if (wireGrabbed == true)
         {
             //Debug.Log(Input.mousePosition);
             //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
@@ -44,5 +41,10 @@ public class Wire_Controller : MonoBehaviour
             transform.position = cursorPos;
         }
 
+    }
+
+    public void toggleWireGrabbed()
+    {
+        wireGrabbed = !wireGrabbed;
     }
 }
