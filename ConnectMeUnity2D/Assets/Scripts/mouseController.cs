@@ -23,7 +23,7 @@ public class mouseController : MonoBehaviour
             if(hit.collider != null)
             {
                 Debug.Log(hit.collider.gameObject.name);
-                //hit.collider.attachedRigidbody.AddForce(Vector2.up);
+
                 if (hit.collider.gameObject.GetComponent<wireNode>() != null)
                 {            
                     hit.collider.gameObject.GetComponent<wireNode>().toggleWireGrabbed();

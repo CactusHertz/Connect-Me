@@ -10,12 +10,13 @@ public class wireNode : MonoBehaviour
 
     public bool inSocket = false;
 
-    public Vector2 homeLocation = new Vector2(0f, 0f);
+    [SerializeField] Vector2 homeLocation;
+    Vector2 socketTarget;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        homeLocation = transform.position;
     }
 
     // Update is called once per frame
@@ -29,6 +30,10 @@ public class wireNode : MonoBehaviour
                 transform.position = homeLocation;
             }
         }
+        else
+        {
+            transform.position = socketTarget;
+        }
 
 
         if (wireGrabbed == true)
@@ -36,15 +41,29 @@ public class wireNode : MonoBehaviour
             //Debug.Log(Input.mousePosition);
             //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            cursorPos.z = -1f;
-
+            cursorPos.z = 0f;
             transform.position = cursorPos;
         }
 
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log(collision.gameObject.name);
+        socketTarget = collision.gameObject.transform.position;
+        inSocket = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        inSocket = false;
+    }
+
     public void toggleWireGrabbed()
     {
         wireGrabbed = !wireGrabbed;
+
+ 
     }
 }
