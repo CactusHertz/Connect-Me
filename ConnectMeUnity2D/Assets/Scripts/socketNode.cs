@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class socketController  : MonoBehaviour
+public class socketNode : MonoBehaviour
 {
-    public GameObject[] SocketList = new GameObject[32];
+    public int socketTag;
+ 
 
     // Start is called before the first frame update
     void Start()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class socketController  : MonoBehaviour
+public class socketManager : MonoBehaviour
 {
     public GameObject[] SocketList = new GameObject[32];
 
