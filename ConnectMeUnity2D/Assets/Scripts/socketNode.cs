@@ -18,4 +18,14 @@ public class socketNode : MonoBehaviour
     {
         
     }
+
+    public int getTag()
+    {
+        return socketTag;
+    }
+
+    public void setTag(int tag)
+    {
+        socketTag = tag;
+    }
 }

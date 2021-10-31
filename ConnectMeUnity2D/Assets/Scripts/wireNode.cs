@@ -5,13 +5,13 @@ using UnityEngine;
 public class wireNode : MonoBehaviour
 {
     public static Vector3 cursorPos;
-    public bool wireGrabbed = false;
-    //public bool hold = false; 
-
-    public bool inSocket = false;
+    [SerializeField] bool wireGrabbed = false;
+    [SerializeField] bool overSocket = false;
+    [SerializeField] private bool inSocket = false;
 
     [SerializeField] Vector2 homeLocation;
-    Vector2 socketTarget;
+    GameObject socketTarget;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +23,7 @@ public class wireNode : MonoBehaviour
     void Update()
     {
 
-        if (inSocket == false)
+        if (overSocket == false)
         {
             if (wireGrabbed == false)
             {
@@ -32,16 +32,22 @@ public class wireNode : MonoBehaviour
         }
         else
         {
-            transform.position = socketTarget;
+            if (wireGrabbed == false)
+            {
+                inSocket = true;
+            }
+            else
+            {
+                inSocket = false;
+            }
+            transform.position = socketTarget.transform.position;
         }
 
 
         if (wireGrabbed == true)
         {
-            //Debug.Log(Input.mousePosition);
-            //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            cursorPos.z = 0f;
+            cursorPos.z = -1f;
             transform.position = cursorPos;
         }
 
@@ -50,20 +56,31 @@ public class wireNode : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
-        socketTarget = collision.gameObject.transform.position;
-        inSocket = true;
+        //Debug.Log(collision.gameObject.name);
+        socketTarget = collision.gameObject;
+
+        overSocket = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        inSocket = false;
+        overSocket = false;
     }
 
     public void toggleWireGrabbed()
     {
         wireGrabbed = !wireGrabbed;
-
- 
     }
+
+    public GameObject getSocket()
+    {
+        return socketTarget;
+    }
+
+    public bool getInSocket()
+    {
+        return inSocket;
+    }
+
+
 }

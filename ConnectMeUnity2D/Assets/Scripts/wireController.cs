@@ -6,8 +6,11 @@ public class wireController : MonoBehaviour
 {
     private LineRenderer lineRend;
 
+    [SerializeField] int[] tags = {-1,-1};
     [SerializeField] private GameObject WireStart;
     [SerializeField] private GameObject WireEnd;
+
+    private bool bothSocketsFilled = false;
 
     void Start()
     {
@@ -19,40 +22,29 @@ public class wireController : MonoBehaviour
     {
         lineRend.SetPosition(0, new Vector3(WireStart.transform.position.x, WireStart.transform.position.y, 0f));
         lineRend.SetPosition(1, new Vector3(WireEnd.transform.position.x, WireEnd.transform.position.y, 0f));
-    }
 
 
-
-    /*
-    private LineRenderer lineRend;
-    private Vector2 mousePos;
-    private Vector2 startMousePos;
-
-    private float distance;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        lineRend = GetComponent<LineRenderer>();
-        lineRend.positionCount = 2;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
+        if(WireStart.GetComponent<wireNode>().getInSocket() == true && WireEnd.GetComponent<wireNode>().getInSocket() == true)
         {
-            startMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            tags[0] = WireStart.GetComponent<wireNode>().getSocket().GetComponent<socketNode>().getTag();
+            tags[1] = WireEnd.GetComponent<wireNode>().getSocket().GetComponent<socketNode>().getTag();
+            bothSocketsFilled = true;
+        }
+        else
+        {
+            bothSocketsFilled = false;
         }
 
-        if (Input.GetMouseButton(0))
-        {
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            lineRend.SetPosition(0, new Vector3(startMousePos.x, startMousePos.y, 0f));
-            lineRend.SetPosition(1, new Vector3(mousePos.x, mousePos.y, 0f));
-            distance = (mousePos - startMousePos).magnitude;
-            Debug.Log("distance is " + distance);
+    }
 
-        }
-    }*/
+    public int[] getTags()
+    {
+        return tags;
+    }
+
+    public bool getBothSocketsFilled()
+    {
+        return bothSocketsFilled;
+    }
+
 }
