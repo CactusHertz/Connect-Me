@@ -60,15 +60,15 @@ public class gameController : MonoBehaviour
                     int[] taskTags = tempTasks[i].GetComponent<taskInfo>().getTags();
                     if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
                     {
-                        Debug.Log("Finished Task");
+                        //Debug.Log("Finished Task");
                     }
                     else if ( tags[1] == taskTags[0] && tags[0] == taskTags[1])
                     {
-                        Debug.Log("Finished Task");
+                        //Debug.Log("Finished Task");
                     }
                     else
                     {
-                        Debug.Log("Wrong Task");
+                        //Debug.Log("Wrong Task");
                     }
                 }
             }

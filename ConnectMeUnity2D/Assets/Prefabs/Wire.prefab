@@ -95,7 +95,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wireGrabbed: 0
+  overSocket: 0
   inSocket: 0
   homeLocation: {x: 7.5, y: 2.5}
 --- !u!50 &4878651378013450887
@@ -232,7 +233,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -251,6 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wireGrabbed: 0
+  overSocket: 0
   inSocket: 0
   homeLocation: {x: 5.5, y: 2.5}
 --- !u!50 &7576539896487117937
@@ -418,5 +420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe9af4437558dc541913f72ad3e20d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tags: ffffffffffffffff
   WireStart: {fileID: 3124514566811128653}
   WireEnd: {fileID: 3124514566533909899}

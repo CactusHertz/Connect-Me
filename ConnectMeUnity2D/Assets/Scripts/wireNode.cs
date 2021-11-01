@@ -56,10 +56,14 @@ public class wireNode : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log(collision.gameObject.name);
-        socketTarget = collision.gameObject;
+        Debug.Log(collision.gameObject.name);
+        if (collision.gameObject.GetComponent<socketNode>() != null)
+        {
+            socketTarget = collision.gameObject;
+            overSocket = true;
+        }
 
-        overSocket = true;
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
