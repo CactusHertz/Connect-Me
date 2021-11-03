@@ -16,6 +16,14 @@ public class gameController : MonoBehaviour
     public GameObject[] tempTasks;
     public GameObject tempTaskHolder;
     int tempTaskCount;
+    int taskCount;
+
+    public GameObject[] taskLocations;
+    public GameObject taskLocationHolder;
+    int taskLocationCount;
+    
+
+
 
 
     // Start is called before the first frame update
@@ -39,11 +47,26 @@ public class gameController : MonoBehaviour
         }
 
         tempTaskCount = tempTaskHolder.transform.childCount;
-        tempTasks = new GameObject[tempTaskCount];
+        taskCount = 5;
+        tempTasks = new GameObject[5];
         //auto populates the array with all the tempTasks. 
         for (int i = 0; i < tempTaskCount; i++)
         {
-            tempTasks[i] = tempTaskHolder.transform.GetChild(i).gameObject;
+
+           // Debug.Log("Test");
+            //if (tempTaskHolder.transform.GetChild(i).gameObject != null)
+           // {
+                tempTasks[i] = tempTaskHolder.transform.GetChild(i).gameObject;
+           // }
+        }
+
+        //taskLocationCount = taskLocationHolder.transform.childCount;
+        taskLocationCount = 5;
+        taskLocations = new GameObject[taskLocationCount];
+        //auto populates the array with all the tempTasks. 
+        for (int i = 0; i < taskLocationCount; i++)
+        {
+            taskLocations[i] = taskLocationHolder.transform.GetChild(i).gameObject;
         }
     }
 
@@ -55,23 +78,35 @@ public class gameController : MonoBehaviour
             if(wires[i].GetComponent<wireController>().getBothSocketsFilled() == true)
             {
                 int[] tags = wires[i].GetComponent<wireController>().getTags();
-                for (int j = 0; j < tempTaskCount; j++)
+                for (int j = 0; j < taskCount; j++)
                 {
-                    int[] taskTags = tempTasks[i].GetComponent<taskInfo>().getTags();
-                    if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
-                    {
-                        //Debug.Log("Finished Task");
-                    }
-                    else if ( tags[1] == taskTags[0] && tags[0] == taskTags[1])
-                    {
-                        //Debug.Log("Finished Task");
-                    }
-                    else
-                    {
-                        //Debug.Log("Wrong Task");
+                    if (tempTasks[j] != null) {
+                        int[] taskTags = tempTasks[j].GetComponent<taskInfo>().getTags();
+
+                        if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
+                        {
+                            Debug.Log("Finished Task");
+                            tempTasks[j].GetComponent<taskInfo>().completedTask = true;
+                        }
+
+                        else if (tags[1] == taskTags[0] && tags[0] == taskTags[1])
+                        {
+                            Debug.Log("Finished Task");
+                            tempTasks[j].GetComponent<taskInfo>().completedTask = true;
+                        }
+                        else
+                        {
+                            tempTasks[j].GetComponent<taskInfo>().completedTask = false;
+                            //Debug.Log("not a Task");
+                        }
                     }
                 }
             }
         }
+
+
     }
+
+
+   
 }

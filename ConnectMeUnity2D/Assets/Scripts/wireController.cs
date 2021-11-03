@@ -36,6 +36,7 @@ public class wireController : MonoBehaviour
         }
 
     }
+   
 
     public int[] getTags()
     {

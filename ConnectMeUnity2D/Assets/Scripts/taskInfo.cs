@@ -6,9 +6,11 @@ public class taskInfo : MonoBehaviour
 {
 
     [SerializeField] int[] tags = { -1, -1 };
-    [SerializeField] int callTime = -1;
+    int callTime = 3;
     [SerializeField] bool callFinished = false;
     [SerializeField] GameObject textObject;
+    public bool completedTask = false;
+    bool started = false;
 
     // Might change this naming convention for the socket, it is such a hassle to update.
     string[] socketNameList = { "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "A9", "A10", "A11", "A12",  "A13", "A14", "A15", "A16", "B9", "B10", "B11", "B12", "B13", "B14", "B15", "B16"};
@@ -36,11 +38,36 @@ public class taskInfo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (started == false)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartCoroutine("TaskTimer");
+                started = true;
+            }
+        }
+        if (callTime < 0)
+        {
+            Debug.Log("Hello");
+            Destroy(gameObject);
+        }
         
     }
 
     public int[] getTags()
     {
         return tags;
+    }
+
+    IEnumerator TaskTimer()
+    {
+        while (true)
+        {
+            if (completedTask == true)
+            {
+                callTime -= 1;
+            }
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

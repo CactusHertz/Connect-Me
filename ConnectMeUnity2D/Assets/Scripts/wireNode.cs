@@ -27,7 +27,7 @@ public class wireNode : MonoBehaviour
         {
             if (wireGrabbed == false)
             {
-                transform.position = homeLocation;
+                goHome();
             }
         }
         else
@@ -35,12 +35,13 @@ public class wireNode : MonoBehaviour
             if (wireGrabbed == false)
             {
                 inSocket = true;
+                transform.position = socketTarget.transform.position;
             }
             else
             {
                 inSocket = false;
             }
-            transform.position = socketTarget.transform.position;
+            
         }
 
 
@@ -85,6 +86,9 @@ public class wireNode : MonoBehaviour
     {
         return inSocket;
     }
-
+    public void goHome()
+    {
+        transform.position = homeLocation;
+    }
 
 }
