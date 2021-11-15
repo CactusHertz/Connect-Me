@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class gameController : MonoBehaviour
 {
@@ -21,10 +22,14 @@ public class gameController : MonoBehaviour
     public GameObject[] taskLocations;
     public GameObject taskLocationHolder;
     int taskLocationCount;
-    
 
 
+    [SerializeField] Text countDownText;
+    int countDownValue = 120;
+    [SerializeField] Text scoreText;
+    int scoreValue = 0;
 
+    private bool startingBool = false;
 
     // Start is called before the first frame update
     void Start()
@@ -52,8 +57,6 @@ public class gameController : MonoBehaviour
         //auto populates the array with all the tempTasks. 
         for (int i = 0; i < tempTaskCount; i++)
         {
-
-           // Debug.Log("Test");
             //if (tempTaskHolder.transform.GetChild(i).gameObject != null)
            // {
                 tempTasks[i] = tempTaskHolder.transform.GetChild(i).gameObject;
@@ -73,40 +76,55 @@ public class gameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < wireCount; i++)
-        {
-            if(wires[i].GetComponent<wireController>().getBothSocketsFilled() == true)
+        if (startingBool == true){
+            for (int i = 0; i < wireCount; i++)
             {
-                int[] tags = wires[i].GetComponent<wireController>().getTags();
-                for (int j = 0; j < taskCount; j++)
+                if (wires[i].GetComponent<wireController>().getBothSocketsFilled() == true)
                 {
-                    if (tempTasks[j] != null) {
-                        int[] taskTags = tempTasks[j].GetComponent<taskInfo>().getTags();
+                    int[] tags = wires[i].GetComponent<wireController>().getTags();
+                    for (int j = 0; j < taskCount; j++)
+                    {
+                        if (tempTasks[j] != null) {
+                            int[] taskTags = tempTasks[j].GetComponent<taskInfo>().getTags();
 
-                        if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
-                        {
-                            Debug.Log("Finished Task");
-                            tempTasks[j].GetComponent<taskInfo>().completedTask = true;
-                        }
+                            if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
+                            {
+                                Debug.Log("Finished Task");
+                                tempTasks[j].GetComponent<taskInfo>().completedTask = true;
+                            }
 
-                        else if (tags[1] == taskTags[0] && tags[0] == taskTags[1])
-                        {
-                            Debug.Log("Finished Task");
-                            tempTasks[j].GetComponent<taskInfo>().completedTask = true;
-                        }
-                        else
-                        {
-                            tempTasks[j].GetComponent<taskInfo>().completedTask = false;
-                            //Debug.Log("not a Task");
+                            else if (tags[1] == taskTags[0] && tags[0] == taskTags[1])
+                            {
+                                Debug.Log("Finished Task");
+                                tempTasks[j].GetComponent<taskInfo>().completedTask = true;
+                            }
+                            else
+                            {
+                                tempTasks[j].GetComponent<taskInfo>().completedTask = false;
+                                //Debug.Log("not a Task");
+                            }
                         }
                     }
                 }
             }
         }
-
-
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartCoroutine(gameTimer());
+                startingBool = true;
+            }
+        }
     }
-
-
-   
+    IEnumerator gameTimer()
+    {
+        while (countDownValue > 0)
+        {
+            countDownValue -= 1;
+            countDownText.text = ("Time: " + countDownValue);
+            
+            yield return new WaitForSeconds(1f);
+        }
+    }
 }
