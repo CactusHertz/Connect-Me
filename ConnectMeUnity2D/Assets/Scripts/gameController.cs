@@ -78,7 +78,7 @@ public class gameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreObject.GetComponent<TextMesh>().text = ("Score: " + scoreValue);
+        scoreObject.GetComponent<TextMesh>().text = ("" + scoreValue);
         if (startingBool == true){
             for (int i = 0; i < wireCount; i++)
             {
@@ -124,7 +124,7 @@ public class gameController : MonoBehaviour
         while (countdownValue > 0)
         {
             countdownValue -= 1;
-            countdownObject.GetComponent<TextMesh>().text = ("Time: " + countdownValue);
+            countdownObject.GetComponent<TextMesh>().text = (""+countdownValue);
             
             yield return new WaitForSeconds(1f);
         }
