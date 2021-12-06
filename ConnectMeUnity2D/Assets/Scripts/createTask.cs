@@ -8,7 +8,7 @@ public class createTask : MonoBehaviour
     [SerializeField] GameObject taskPrefab;
 
     bool started = false;
-    float taskDelay = 5f;
+    [SerializeField] float taskDelay = 5f;
 
     // Start is called before the first frame update
     void Start()
