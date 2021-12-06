@@ -49,6 +49,23 @@ public class wireNode : MonoBehaviour
         {
             cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             cursorPos.z = -1f;
+            if (cursorPos.x < -9)
+            {
+                cursorPos.x = -9;
+            }
+            if (cursorPos.x > 9)
+            {
+                cursorPos.x = 9;
+            }
+            if (cursorPos.y < -5)
+            {
+                cursorPos.y = -5;
+            }
+            if (cursorPos.y > 5)
+            {
+                cursorPos.y = 5;
+            }
+
             transform.position = cursorPos;
         }
 

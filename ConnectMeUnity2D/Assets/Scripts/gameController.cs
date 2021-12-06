@@ -23,11 +23,13 @@ public class gameController : MonoBehaviour
     public GameObject taskLocationHolder;
     int taskLocationCount;
 
-
-    [SerializeField] Text countDownText;
-    int countDownValue = 120;
-    [SerializeField] Text scoreText;
+   
+    int countdownValue = 120;
     int scoreValue = 0;
+    
+    [SerializeField] GameObject scoreObject;
+    [SerializeField] GameObject countdownObject;
+    
 
     private bool startingBool = false;
 
@@ -76,6 +78,7 @@ public class gameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        scoreObject.GetComponent<TextMesh>().text = ("Score: " + scoreValue);
         if (startingBool == true){
             for (int i = 0; i < wireCount; i++)
             {
@@ -101,7 +104,6 @@ public class gameController : MonoBehaviour
                             else
                             {
                                 tempTasks[j].GetComponent<taskInfo>().completedTask = false;
-                                //Debug.Log("not a Task");
                             }
                         }
                     }
@@ -119,12 +121,17 @@ public class gameController : MonoBehaviour
     }
     IEnumerator gameTimer()
     {
-        while (countDownValue > 0)
+        while (countdownValue > 0)
         {
-            countDownValue -= 1;
-            countDownText.text = ("Time: " + countDownValue);
+            countdownValue -= 1;
+            countdownObject.GetComponent<TextMesh>().text = ("Time: " + countdownValue);
             
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    public void IncrementScore(int Amount)
+    {
+        scoreValue += Amount;
     }
 }

@@ -9,8 +9,11 @@ public class taskInfo : MonoBehaviour
     int callTime = 3;
     [SerializeField] bool callFinished = false;
     [SerializeField] GameObject textObject;
+    [SerializeField] GameObject callTimeText;
+    [SerializeField] GameObject square;
     public bool completedTask = false;
     bool started = false;
+    GameObject gameManagerObject;
 
     // Might change this naming convention for the socket, it is such a hassle to update.
     string[] socketNameList = { "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "A9", "A10", "A11", "A12",  "A13", "A14", "A15", "A16", "B9", "B10", "B11", "B12", "B13", "B14", "B15", "B16"};
@@ -19,6 +22,8 @@ public class taskInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManagerObject = GameObject.Find("GameManager");
+        callTimeText.GetComponent<TextMesh>().text = ("call time: " + callTime + " sec");
         // add check for if a slot is already taken by another task.
         // can only be overidden by an emergency call
         tags[0] = Random.Range(0, 32);
@@ -46,9 +51,14 @@ public class taskInfo : MonoBehaviour
                 started = true;
             }
         }
+        if (callTime == 0)
+        {
+            
+                square.GetComponent<SpriteRenderer>().color = Color.green;
+        }
         if (callTime < 0)
         {
-            Debug.Log("Hello");
+            gameManagerObject.GetComponent<gameController>().IncrementScore(20);
             Destroy(gameObject);
         }
         
@@ -66,6 +76,7 @@ public class taskInfo : MonoBehaviour
             if (completedTask == true)
             {
                 callTime -= 1;
+                callTimeText.GetComponent<TextMesh>().text = ("call time: " + callTime + " sec");
             }
             yield return new WaitForSeconds(1f);
         }
