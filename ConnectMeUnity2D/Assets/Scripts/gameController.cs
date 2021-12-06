@@ -92,13 +92,10 @@ public class gameController : MonoBehaviour
 
                             if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
                             {
-                                Debug.Log("Finished Task");
                                 tempTasks[j].GetComponent<taskInfo>().completedTask = true;
                             }
-
                             else if (tags[1] == taskTags[0] && tags[0] == taskTags[1])
                             {
-                                Debug.Log("Finished Task");
                                 tempTasks[j].GetComponent<taskInfo>().completedTask = true;
                             }
                             else
@@ -124,7 +121,7 @@ public class gameController : MonoBehaviour
         while (countdownValue > 0)
         {
             countdownValue -= 1;
-            countdownObject.GetComponent<TextMesh>().text = (""+countdownValue);
+            countdownObject.GetComponent<TextMesh>().text = ("" + countdownValue);
             
             yield return new WaitForSeconds(1f);
         }
