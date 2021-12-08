@@ -13,7 +13,6 @@ public class createTask : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
        
     }
 
@@ -33,6 +32,7 @@ public class createTask : MonoBehaviour
     
     IEnumerator makeTask()
     {
+        yield return new WaitForSeconds(3);
         for (int i = 0; i < 15; i++)
         {
             for(int j = 0; j < 5; j++)

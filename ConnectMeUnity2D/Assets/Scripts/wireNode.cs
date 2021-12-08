@@ -11,7 +11,6 @@ public class wireNode : MonoBehaviour
 
     [SerializeField] Vector2 homeLocation;
     GameObject socketTarget;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -22,31 +21,17 @@ public class wireNode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (overSocket == false)
+        if (inSocket == true)
         {
-            if (wireGrabbed == false)
-            {
-                goHome();
-            }
+            transform.position = socketTarget.transform.position;
         }
         else
         {
-            if (wireGrabbed == false)
-            {
-                inSocket = true;
-                transform.position = socketTarget.transform.position;
-            }
-            else
-            {
-                inSocket = false;
-            }
-            
+            transform.position = homeLocation;
         }
-
-
         if (wireGrabbed == true)
         {
+            inSocket = false;
             cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             cursorPos.z = -1f;
             if (cursorPos.x < -9)
@@ -65,23 +50,18 @@ public class wireNode : MonoBehaviour
             {
                 cursorPos.y = 5;
             }
-
             transform.position = cursorPos;
         }
-
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
+        //Debug.Log(collision.gameObject.name);
         if (collision.gameObject.GetComponent<socketNode>() != null)
         {
             socketTarget = collision.gameObject;
             overSocket = true;
         }
-
-        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -92,6 +72,14 @@ public class wireNode : MonoBehaviour
     public void toggleWireGrabbed()
     {
         wireGrabbed = !wireGrabbed;
+        if(overSocket == true)
+        {
+            inSocket = true;
+        }
+        else
+        {
+            inSocket = false;
+        }
     }
 
     public GameObject getSocket()
@@ -105,6 +93,7 @@ public class wireNode : MonoBehaviour
     }
     public void goHome()
     {
+        inSocket = false;
         transform.position = homeLocation;
     }
 

@@ -41,7 +41,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2421937352861781546}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -411,20 +411,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2421937353198382443}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d29e0c6576f12544aafb1ea4ff3da36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   endPoint: {fileID: 2421937353052113981}
   cableMaterial: {fileID: 2100000, guid: 3ba32ad2cf71c254cb77a2448f8f848f, type: 2}
-  cableLength: 9
+  cableLength: 4
   totalSegments: 15
-  segmentsPerUnit: 2
-  cableWidth: 0.2
+  segmentsPerUnit: 4
+  cableWidth: 0.15
   verletIterations: 1
   solverIterations: 1
-  stiffness: 1
+  stiffness: 100
 --- !u!231 &2421937353198382437
 SpringJoint2D:
   m_ObjectHideFlags: 0

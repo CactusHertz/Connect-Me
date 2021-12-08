@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class gameController : MonoBehaviour
 {
@@ -22,13 +23,13 @@ public class gameController : MonoBehaviour
     public GameObject taskLocationHolder;
     int taskLocationCount;
 
-   
     [SerializeField] int countdownValue = 120;
     int scoreValue = 0;
-    
+    [SerializeField] GameObject highscoreObject;
     [SerializeField] GameObject scoreObject;
     [SerializeField] GameObject countdownObject;
-    
+
+    [SerializeField] GameObject canvasObject;
 
     private bool startingBool = false;
 
@@ -58,10 +59,7 @@ public class gameController : MonoBehaviour
         //auto populates the array with all the tempTasks. 
         for (int i = 0; i < tempTaskCount; i++)
         {
-            //if (tempTaskHolder.transform.GetChild(i).gameObject != null)
-           // {
                 tempTasks[i] = tempTaskHolder.transform.GetChild(i).gameObject;
-           // }
         }
 
         //taskLocationCount = taskLocationHolder.transform.childCount;
@@ -72,51 +70,15 @@ public class gameController : MonoBehaviour
         {
             taskLocations[i] = taskLocationHolder.transform.GetChild(i).gameObject;
         }
+
+       
     }
 
     // Update is called once per frame
     void Update()
     {
         scoreObject.GetComponent<TextMesh>().text = ("" + scoreValue);
-
-        if (startingBool == true){
-            for (int i = 0; i < wireCount; i++)
-            {
-                if (wires[i].GetComponent<wireController>().getBothSocketsFilled() == true)
-                {
-                    int[] tags = wires[i].GetComponent<wireController>().getTags();
-                    for (int j = 0; j < taskCount; j++)
-                    {
-                        if (tempTasks[j] != null) {
-                            int[] taskTags = tempTasks[j].GetComponent<taskInfo>().getTags();
-                            tempTasks[j].GetComponent<taskInfo>().completedTask = false;
-                            if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
-                            {
-                                tempTasks[j].GetComponent<taskInfo>().completedTask = true;
-                                Debug.Log("Wire " + i + " Connected properly");
-                            }
-                            else if (tags[1] == taskTags[0] && tags[0] == taskTags[1])
-                            {
-                                tempTasks[j].GetComponent<taskInfo>().completedTask = true;
-                                Debug.Log("Wire " + i + " Connected properly");
-                            }
-                            /*
-                            else
-                            {
-                                tempTasks[j].GetComponent<taskInfo>().completedTask = false;
-                                // Debug.Log("Wire " + i + "Not Connected properly");
-                            }*/
-                        }
-                    }
-                }
-            }
-        }
-
-        /*
-         if 
-         */
-        else
-        {
+        if (startingBool == false) { 
             if (Input.GetMouseButtonDown(0))
             {
                 StartCoroutine(gameTimer());
@@ -130,10 +92,42 @@ public class gameController : MonoBehaviour
         {
             countdownValue -= 1;
             countdownObject.GetComponent<TextMesh>().text = ("" + countdownValue);
-            
+           
+            // iterates through the task list
+            for (int j = 0; j < taskCount; j++)
+            {
+                // if a tasks exist it will preform the following checks 
+                if (tempTasks[j] != null)
+                {
+                    int[] taskTags = tempTasks[j].GetComponent<taskInfo>().getTags();
+                    // iterates through the wire list
+                    for (int i = 0; i < wireCount; i++)
+                    {
+                        if (wires[i].GetComponent<wireController>().getBothSocketsFilled() == true)
+                        {
+                            int[] tags = wires[i].GetComponent<wireController>().getTags();
+                            if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
+                            {
+                                tempTasks[j].GetComponent<taskInfo>().decrementTime();
+                            }
+                            else if (tags[1] == taskTags[0] && tags[0] == taskTags[1])
+                            {
+                                tempTasks[j].GetComponent<taskInfo>().decrementTime();
+                            }
+                        }
+                    }
+                }
+            }
             yield return new WaitForSeconds(1f);
         }
-        
+
+        // if (scoreValue > PlayerPrefs.GetInt("HighScore", 0))
+        //{
+        //   PlayerPrefs.SetInt("HighScore", scoreValue);
+        //   highscoreObject.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+        // }
+        canvasObject.SetActive(true);
+        highscoreObject.GetComponent<TextMeshProUGUI>().text = ("Score: " + scoreValue);
     }
 
     public void IncrementScore(int Amount)
