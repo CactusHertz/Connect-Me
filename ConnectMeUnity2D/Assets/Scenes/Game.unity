@@ -4237,6 +4237,7 @@ MonoBehaviour:
   tempTaskHolder: {fileID: 690859325}
   taskLocations: []
   taskLocationHolder: {fileID: 466089303}
+  countdownValue: 60
   scoreObject: {fileID: 426131607}
   countdownObject: {fileID: 451588429}
 --- !u!114 &1749408406

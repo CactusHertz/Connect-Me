@@ -71,19 +71,20 @@ public class taskInfo : MonoBehaviour
             
 
         textObject.GetComponent<TextMesh>().text = (socketNameList[tags[0]] + " -> " + socketNameList[tags[1]]);
+        StartCoroutine("TaskTimer");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (started == false)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                StartCoroutine("TaskTimer");
-                started = true;
-            }
-        }
+        //if (started == false)
+        //{
+           // if (Input.GetMouseButtonDown(0))
+           // {
+               // StartCoroutine("TaskTimer");
+               // started = true;
+           // }
+       // }
         if (callTime == 0)
         {
             

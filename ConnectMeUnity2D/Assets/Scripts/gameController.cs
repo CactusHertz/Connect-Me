@@ -9,7 +9,6 @@ public class gameController : MonoBehaviour
     public GameObject wireHolder;
     int wireCount;
 
-
     public GameObject[] sockets;
     public GameObject socketHolder;
     int socketCount;
@@ -24,7 +23,7 @@ public class gameController : MonoBehaviour
     int taskLocationCount;
 
    
-    int countdownValue = 120;
+    [SerializeField] int countdownValue = 120;
     int scoreValue = 0;
     
     [SerializeField] GameObject scoreObject;
@@ -79,6 +78,7 @@ public class gameController : MonoBehaviour
     void Update()
     {
         scoreObject.GetComponent<TextMesh>().text = ("" + scoreValue);
+
         if (startingBool == true){
             for (int i = 0; i < wireCount; i++)
             {
@@ -89,24 +89,32 @@ public class gameController : MonoBehaviour
                     {
                         if (tempTasks[j] != null) {
                             int[] taskTags = tempTasks[j].GetComponent<taskInfo>().getTags();
-
+                            tempTasks[j].GetComponent<taskInfo>().completedTask = false;
                             if (tags[0] == taskTags[0] && tags[1] == taskTags[1])
                             {
                                 tempTasks[j].GetComponent<taskInfo>().completedTask = true;
+                                Debug.Log("Wire " + i + " Connected properly");
                             }
                             else if (tags[1] == taskTags[0] && tags[0] == taskTags[1])
                             {
                                 tempTasks[j].GetComponent<taskInfo>().completedTask = true;
+                                Debug.Log("Wire " + i + " Connected properly");
                             }
+                            /*
                             else
                             {
                                 tempTasks[j].GetComponent<taskInfo>().completedTask = false;
-                            }
+                                // Debug.Log("Wire " + i + "Not Connected properly");
+                            }*/
                         }
                     }
                 }
             }
         }
+
+        /*
+         if 
+         */
         else
         {
             if (Input.GetMouseButtonDown(0))
@@ -125,6 +133,7 @@ public class gameController : MonoBehaviour
             
             yield return new WaitForSeconds(1f);
         }
+        
     }
 
     public void IncrementScore(int Amount)
