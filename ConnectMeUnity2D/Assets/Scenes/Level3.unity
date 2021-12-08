@@ -5771,7 +5771,7 @@ MonoBehaviour:
   scoreObject: {fileID: 1739359053}
   countdownObject: {fileID: 2040516689}
   canvasObject: {fileID: 1795796219}
-  instructions: {fileID: 0}
+  instructions: {fileID: 1195201322}
   startingBool: 0
 --- !u!114 &2044098407
 MonoBehaviour:
