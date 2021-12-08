@@ -15,9 +15,24 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void Level1()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void Level2()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void Level3()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+
     public void QuitGame()
     {
-        Debug.Log("Quit");
         Application.Quit();
     }
 }
