@@ -23,15 +23,16 @@ public class gameController : MonoBehaviour
     public GameObject taskLocationHolder;
     int taskLocationCount;
 
-    [SerializeField] int countdownValue = 120;
+    public int countdownValue = 120;
     int scoreValue = 0;
     [SerializeField] GameObject highscoreObject;
     [SerializeField] GameObject scoreObject;
     [SerializeField] GameObject countdownObject;
 
     [SerializeField] GameObject canvasObject;
+    [SerializeField] GameObject instructions;
 
-    private bool startingBool = false;
+    public bool startingBool = false;
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +82,7 @@ public class gameController : MonoBehaviour
         if (startingBool == false) { 
             if (Input.GetMouseButtonDown(0))
             {
+                instructions.SetActive(false);
                 StartCoroutine(gameTimer());
                 startingBool = true;
             }

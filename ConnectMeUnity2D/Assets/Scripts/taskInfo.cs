@@ -1,29 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class taskInfo : MonoBehaviour
 {
 
     [SerializeField] int[] tags = { -1, -1 };
     int callTime = 3;
-    int pointValue = 10;
+    int pointValue = 20;
     bool callFinished = false;
     [SerializeField] GameObject textObject;
     [SerializeField] GameObject callTimeText;
     [SerializeField] GameObject square;
+    [SerializeField] GameObject timeSquare;
     public bool completedTask = false;
 
     GameObject gameManagerObject;
     gameController GCscript;
 
-    // Might change this naming convention for the socket, it is such a hassle to update.
+    private bool hasLimit = false;
+    private float xScaleFactor = 0.0f;
+    private bool startingBoolTask = false;
+
+    // Might change this naming convention for the sockets, it is a hassle to update.
     string[] socketNameList = { "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "A9", "A10", "A11", "A12",  "A13", "A14", "A15", "A16", "B9", "B10", "B11", "B12", "B13", "B14", "B15", "B16"};
-    
+    bool[] hasLimitList = {false, true, true };
+    float[] xScaleFactorList = {0.0f, 0.001f, 0.0018f};
+
+
     // Start is called before the first frame update
     void Start()
     {
-        callTime = Random.Range(2, 5);
+        callTime = Random.Range(2, 4);
         gameManagerObject = GameObject.Find("GameManager");
         GCscript = gameManagerObject.GetComponent<gameController>();
         callTimeText.GetComponent<TextMesh>().text = ("call time: " + callTime + " sec");
@@ -73,6 +82,8 @@ public class taskInfo : MonoBehaviour
 
         // labels the task object with the correct ends 
         textObject.GetComponent<TextMesh>().text = (socketNameList[tags[0]] + " -> " + socketNameList[tags[1]]);
+        xScaleFactor = xScaleFactorList[SceneManager.GetActiveScene().buildIndex-1];
+        hasLimit = hasLimitList[SceneManager.GetActiveScene().buildIndex-1];
     }
 
     // Update is called once per frame
@@ -83,10 +94,22 @@ public class taskInfo : MonoBehaviour
         {
                 square.GetComponent<SpriteRenderer>().color = Color.green;
         }
-        if (callTime < 0)
+        else if (callTime < 0)
         {
             gameManagerObject.GetComponent<gameController>().IncrementScore(pointValue);
             Destroy(gameObject);
+        }
+        if (hasLimit == true)
+        {
+            timeSquare.SetActive(true);
+            if (startingBoolTask == false)
+            {
+                if (gameManagerObject.GetComponent<gameController>().startingBool)
+                {
+                    StartCoroutine(TaskTimeLimit());
+                    startingBoolTask = true;
+                }
+            }
         }
     }
 
@@ -98,5 +121,32 @@ public class taskInfo : MonoBehaviour
     public void decrementTime()
     {
         callTime--;
+    }
+    IEnumerator TaskTimeLimit()
+    {
+        while (timeSquare.transform.localScale.x >= 0)
+        {
+
+            if (timeSquare.transform.localScale.x < 0.5)
+            {
+                timeSquare.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+            else if (timeSquare.transform.localScale.x < 1.5)
+            {
+                timeSquare.GetComponent<SpriteRenderer>().color = Color.yellow;
+            }
+            
+
+            Vector3 scaleChange = new Vector3(-xScaleFactor, 0.0f, 0.0f);
+            timeSquare.transform.localScale += scaleChange;
+            
+            yield return new WaitForSeconds(0.01f);
+
+        }
+        if (GCscript.countdownValue >= 0)
+        {
+            gameManagerObject.GetComponent<gameController>().IncrementScore(pointValue / 4);
+        }
+        Destroy(gameObject);
     }
 }

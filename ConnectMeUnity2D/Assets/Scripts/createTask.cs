@@ -10,10 +10,14 @@ public class createTask : MonoBehaviour
     bool started = false;
     [SerializeField] float taskDelay = 5f;
 
+    GameObject gameManagerObject;
+    gameController GCscript;
+
     // Start is called before the first frame update
     void Start()
     {
-       
+        gameManagerObject = GameObject.Find("GameManager");
+        GCscript = gameManagerObject.GetComponent<gameController>();
     }
 
     // Update is called once per frame
@@ -33,8 +37,7 @@ public class createTask : MonoBehaviour
     IEnumerator makeTask()
     {
         yield return new WaitForSeconds(3);
-        for (int i = 0; i < 15; i++)
-        {
+        while (GCscript.countdownValue >=0) { 
             for(int j = 0; j < 5; j++)
             {
                 if (gameControllerObject.GetComponent<gameController>().tempTasks[j] == null)
@@ -42,6 +45,7 @@ public class createTask : MonoBehaviour
                     GameObject newTask = Instantiate(taskPrefab, gameControllerObject.GetComponent<gameController>().taskLocations[j].transform.position, gameControllerObject.GetComponent<gameController>().taskLocations[j].transform.rotation);
                     gameControllerObject.GetComponent<gameController>().tempTasks[j] = newTask;
                     break;
+                  
                 }
             }
             yield return new WaitForSeconds(taskDelay);
